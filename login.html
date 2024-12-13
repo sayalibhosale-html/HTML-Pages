@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Signup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: url('https://img.freepik.com/premium-vector/modern-workspace-with-laptop-coffee-notepad-beige-background_1324820-411.jpg') no-repeat center center/cover;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: background-color 0.5s ease;
+        }
+        body.dark-theme {
+            background: url('https://img.freepik.com/free-photo/comfortable-workplace-with-computer-table-night-3d-render_1142-59677.jpg') no-repeat center center/cover;
+            background-size: cover;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+        .container {
+            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.2);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+            text-align: center;
+            color: #fff;
+            width: 350px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .container h2 {
+            margin-bottom: 25px;
+            font-size: 24px;
+            font-weight: 600;
+            color: #FF5733;
+        }
+        .container input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 10px;
+            outline: none;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.8);
+            color: #333;
+            transition: all 0.3s ease;
+        }
+        .container input:focus {
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 0 10px rgba(255, 87, 51, 0.4);
+        }
+        .container button {
+            width: 100%;
+            padding: 12px;
+            margin: 20px 0;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            background-color: #FF5733;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .container button:hover {
+            background-color: #FF784E;
+            transform: translateY(-2px);
+        }
+        .container a {
+            text-decoration: none;
+            color: #FF784E;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+        .container a:hover {
+            color: #FF9572;
+        }
+        .container .toggle-link {
+            display: block;
+            margin-top: 15px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .hidden {
+            display: none;
+        }
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            transition: background-color 0.3s ease;
+        }
+        .theme-toggle:hover {
+            background-color: rgba(255, 255, 255, 1);
+        }
+
+            /* Responsive Design */
+    @media screen and (max-width: 480px) {
+        .container {
+            width: 90%;
+            padding: 30px 20px;
+        }
+        .container h2 {
+            font-size: 20px;
+        }
+        .container input {
+            font-size: 14px;
+            padding: 10px;
+        }
+        .container button {
+            font-size: 14px;
+            padding: 10px;
+        }
+        .container .toggle-link {
+            font-size: 14px;
+        }
+    }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()">&#9728;</button>
+    <div class="container" id="loginForm">
+        <h2>Sign In</h2>
+        <input type="text" id="loginUsername" placeholder="Username" required>
+        <input type="password" id="loginPassword" placeholder="Password" required>
+        <button onclick="handleLogin()">Login</button>
+        <a href="#" class="toggle-link" onclick="showSignup()">Signup</a>
+    </div>
+
+    <div class="container hidden" id="signupForm">
+        <h2>Sign Up</h2>
+        <input type="text" id="signupFullName" placeholder="Full Name" required>
+        <input type="text" id="signupUsername" placeholder="Username" required>
+        <input type="email" id="signupEmail" placeholder="Email" required>
+        <input type="password" id="signupPassword" placeholder="Password" required>
+        <button onclick="handleSignup()">Signup</button>
+        <a href="#" class="toggle-link" onclick="showLogin()">Back to Login</a>
+    </div>
+    
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+    
+        function showSignup() {
+            loginForm.classList.add('hidden');
+            signupForm.classList.remove('hidden');
+        }
+    
+        function showLogin() {
+            signupForm.classList.add('hidden');
+            loginForm.classList.remove('hidden');
+        }
+    
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+        }
+    
+        function handleLogin() {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            if (username && password) {
+                alert(`Welcome back, ${username}!`);
+            } else {
+                alert('Please enter both username and password.');
+            }
+        }
+    
+        function handleSignup() {
+            const fullName = document.getElementById('signupFullName').value;
+            const username = document.getElementById('signupUsername').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            if (fullName && username && email && password) {
+                alert(`Thank you for signing up, ${fullName}!`);
+            } else {
+                alert('Please fill out all fields to sign up.');
+            }
+        }
+    </script>
+</body>
+</html>
