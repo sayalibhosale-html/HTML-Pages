@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Image Slider</title>
+</head>
+<style>
+    /* Reset and general styling */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    /* Slider Container */
+    .slider-container {
+        position: relative;
+        width: 80%;
+        max-width: 800px;
+        height: 400px;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        background-color: #fff;
+    }
+
+    .slider {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d; /* Enables 3D perspective */
+        transition: transform 0.7s ease-in-out;
+    }
+
+    .slide {
+        position: absolute;
+        width: 60%; /* Reduce width for side slides */
+        height: 100%;
+        transition: all 0.7s ease;
+        opacity: 0.5; /* Set lower opacity for all slides */
+        filter: blur(3px); /* Add blur to non-active slides */
+        transform-origin: center;
+        transform: scale(0.8) translateX(0); /* Default state */
+    }
+
+    .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    /* Caption styling */
+    .caption {
+        position: absolute;
+        top: 80%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #fff;
+        font-size: 14px;
+        font-family: 'Georgia', serif;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.7);
+        padding: 10px 20px;
+        background-color: rgba(0, 0, 0, 0.6);
+        border-radius: 5px;
+        max-width: 80%;
+        text-align: center;
+    }
+
+    /* Focused (center) slide */
+    .slide.active {
+        transform: scale(1) translateX(0); /* Center slide full scale */
+        opacity: 1;
+        filter: blur(0); /* No blur for active slide */
+        z-index: 10;
+    }
+
+    /* Previous slide style */
+    .slide.prev {
+        transform: translateX(-70%) scale(0.8); /* Moves left */
+        opacity: 0.6;
+        z-index: 5;
+    }
+
+    /* Next slide style */
+    .slide.next {
+        transform: translateX(70%) scale(0.8); /* Moves right */
+        opacity: 0.6;
+        z-index: 5;
+    }
+
+    /* Navigation Buttons */
+    .prev-btn, .next-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        font-size: 18px;
+        border-radius: 50%;
+        z-index: 20;
+    }
+
+    .prev-btn {
+        left: 10px;
+    }
+
+    .next-btn {
+        right: 10px;
+    }
+
+    .prev-btn:hover, .next-btn:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    /* Navigation Dots */
+    .dots-container {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        z-index: 10;
+    }
+
+    .dot {
+        height: 10px;
+        width: 10px;
+        margin: 0 5px;
+        background-color: #bbb;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .dot.active {
+        background-color: #333;
+        transform: scale(1.2);
+    }
+</style>
+<body>
+    <!-- Image Slider Container -->
+    <div class="slider-container">
+        <div class="slider">
+            <!-- Slider Images with Captions -->
+            <div class="slide">
+                <img src="https://www.machupicchu.org/wp-content/uploads/machu-picchu-modern-teories.jpg" alt="Image 1">
+                <div class="caption">Machu Picchu - Ancient Wonder</div>
+            </div>
+            <div class="slide">
+                <img src="https://cuscoperu.b-cdn.net/wp-content/uploads/2024/06/Llama-en-Machu-Picchu-cel.jpg" alt="Image 2">
+                <div class="caption">Llama at Machu Picchu</div>
+            </div>
+            <div class="slide">
+                <img src="https://i.natgeofe.com/n/819ea774-aa80-435e-af5a-ae56efee7ce3/92491_3x2.jpg" alt="Image 3">
+                <div class="caption">Sunrise Over Machu Picchu</div>
+            </div>
+        </div>
+    
+        <!-- Navigation Buttons -->
+        <button class="prev-btn">&#10094;</button>
+        <button class="next-btn">&#10095;</button>
+    
+        <!-- Navigation Dots -->
+        <div class="dots-container">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+    </div>
+    
+    <script>
+        let currentSlide = 0; // Current slide index
+        const slides = document.querySelectorAll(".slide");
+        const dots = document.querySelectorAll(".dot");
+
+        function updateSlides() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove("active", "prev", "next");
+            });
+
+            slides[currentSlide].classList.add("active");
+            slides[(currentSlide - 1 + slides.length) % slides.length].classList.add("prev");
+            slides[(currentSlide + 1) % slides.length].classList.add("next");
+
+            // Update dots
+            dots.forEach(dot => dot.classList.remove("active"));
+            dots[currentSlide].classList.add("active");
+        }
+
+        // Initialize slides
+        updateSlides();
+
+        // Next Button
+        document.querySelector(".next-btn").addEventListener("click", () => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlides();
+        });
+
+        // Previous Button
+        document.querySelector(".prev-btn").addEventListener("click", () => {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            updateSlides();
+        });
+
+        // Navigation Dots
+        dots.forEach((dot, index) => {
+            dot.addEventListener("click", () => {
+                currentSlide = index;
+                updateSlides();
+            });
+        });
+
+        // Auto-slide
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlides();
+        }, 3000);
+    </script>
+</body>
+</html>
