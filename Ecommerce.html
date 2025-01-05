@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-commerce Product Page</title>
+  <style>
+    /* General Styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    /* Header / Navigation */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: #333;
+      color: #fff;
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: #fff;
+      margin: 0 10px;
+    }
+
+    .navbar a:hover {
+      text-decoration: underline;
+    }
+
+    /* Main Section */
+    .product-page {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 20px auto;
+      max-width: 1200px;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    /* Product Image Section */
+    .product-image {
+      flex: 1 1 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .product-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    /* Product Details Section */
+    .product-details {
+      flex: 1 1 50%;
+      padding: 20px;
+    }
+
+    .product-details h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .product-details p {
+      margin: 10px 0;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .product-details .price {
+      font-size: 20px;
+      font-weight: bold;
+      margin: 20px 0;
+      color: #27ae60;
+    }
+
+    .add-to-cart-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #27ae60;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    .add-to-cart-btn:hover {
+      background-color: #219150;
+    }
+
+    /* Additional Sections */
+    .additional-section {
+      margin: 20px;
+    }
+
+    .additional-section h2 {
+      margin-bottom: 10px;
+    }
+
+    .related-products,
+    .reviews {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .related-products .product,
+    .reviews .review {
+      flex: 1 1 calc(33.333% - 20px);
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .related-products img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    @media screen and (max-width: 768px) {
+      .product-page {
+        flex-direction: column;
+      }
+
+      .related-products .product,
+      .reviews .review {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <a href="#">Home</a>
+    <a href="#">Shop</a>
+    <a href="#">Contact</a>
+    <a href="#">Cart</a>
+  </div>
+
+  <!-- Main Product Section -->
+  <div class="product-page">
+    <!-- Product Image -->
+    <div class="product-image">
+      <img src="https://www.abiderstech.com/public/uploads/service/1667380774_624b08ea640c2982cc67.jpg" alt="Product Image">
+    </div>
+
+    <!-- Product Details -->
+    <div class="product-details">
+      <h1>Product Name</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla convallis nisi ac ligula efficitur, vitae vehicula eros interdum.</p>
+      <p class="price">₹99999</p>
+      <a href="#" class="add-to-cart-btn">Add to Cart</a>
+    </div>
+  </div>
+
+  <!-- Additional Sections -->
+  <div class="additional-section">
+    <!-- Customer Reviews -->
+    <h2>Customer Reviews</h2>
+    <div class="reviews">
+      <div class="review">
+        <p><strong>John Doe:</strong> Amazing product!</p>
+      </div>
+      <div class="review">
+        <p><strong>Jane Smith:</strong> Great quality and fast delivery!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Related Products -->
+  <div class="additional-section">
+    <h2>Related Products</h2>
+    <div class="related-products">
+      <div class="product">
+        <img src="https://www.zdnet.com/a/img/resize/57a6ccddfa0e67f250eeaa759e5a938f59a2a3a8/2022/05/31/ea6eba3d-8e02-4118-bdcc-55f5630e1a21/lenovo-yoga-9i-hero.jpg?auto=webp&fit=crop&height=900&width=1200" alt="Related Product 1">
+        <p>Related Product 1</p>
+      </div>
+      <div class="product">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYTCizu946SV871fL4Vj3YZDT89EhvR_CjfA&s" alt="Related Product 2">
+        <p>Related Product 2</p>
+      </div>
+      <div class="product">
+        <img src="https://cdn.thewirecutter.com/wp-content/media/2024/07/laptopsunder500-2048px-5447.jpg?auto=webp&quality=75&crop=1.91:1&width=1200" alt="Related Product 3">
+        <p>Related Product 3</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
